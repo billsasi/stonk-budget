@@ -1,8 +1,9 @@
 const { MongoClient } = require('mongodb');
-const url = 'mongodb://localhost:27017';
-const dbName = 'itemdb';
 
-let client = new MongoClient(url, { useUnifiedTopology: true });
+const client = new MongoClient(process.env.MONGO_URI, {
+  useUnifiedTopology: true,
+});
+
 let db;
 
 async function getDb() {
