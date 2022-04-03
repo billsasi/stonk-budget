@@ -15,10 +15,7 @@ app.get('/', (req, res) => {
   res.send('Hello world!');
 });
 
-app.get('/api/transactions', async (req, res) => {
-  const data = await handleGetTransactions();
-  res.send(data);
-});
+app.use('/api/transactions', require('./routes/transactionRoutes'));
 
 app.listen(PORT, () => {
   console.log(`listening at port ${PORT}`);
