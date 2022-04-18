@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Overview from './components/Overview';
 import TransactionHistory from './components/TransactionHistory';
 import InputForm from './components/InputForm';
@@ -7,9 +7,10 @@ import './App.css';
 // hi
 
 const App = () => {
+  const [transactions, setTransactions] = useState([]);
+
   return (
     <div className="container">
-      <h1>App</h1>
       <Overview />
       <InputForm />
       <TransactionHistory />
