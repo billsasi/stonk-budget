@@ -1,16 +1,26 @@
 import React, { useState } from 'react';
 
-const InputForm = () => {
+const InputForm = ({ handleAddTransaction }) => {
   const [addItem, setAddItem] = useState(false);
-  const [input, setInput] = useState('');
+  const [desc, setDesc] = useState('');
+  const [amt, setAmt] = useState('');
 
-  const handleChange = (e) => {
-    setInput(e.target.value);
+  const handleDescChange = (e) => {
+    setDesc(e.target.value);
+  };
+  const handleAmtChange = (e) => {
+    setAmt(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setInput('');
+    handleAddTransaction({
+      id: Math.ceil(Math.random() * 100000),
+      name: desc,
+      amt: amt,
+    });
+    setDesc('');
+    setAmt('');
   };
 
   return (
@@ -20,9 +30,10 @@ const InputForm = () => {
         <form onSubmit={handleSubmit}>
           <input
             placeholder="Enter transaction"
-            value={input}
-            onChange={handleChange}
+            value={desc}
+            onChange={handleDescChange}
           ></input>
+          <input placeholder="$" value={amt} onChange={handleAmtChange}></input>
           <button type="submit">+</button>
         </form>
       )}

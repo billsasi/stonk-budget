@@ -9,11 +9,24 @@ import './App.css';
 const App = () => {
   const [transactions, setTransactions] = useState([]);
 
+  const addTransaction = (item) => {
+    console.log(item);
+    setTransactions([item, ...transactions]);
+  };
+
+  const deleteTransaction = (id) => {
+    const arr = transactions.filter((item) => item.id !== id);
+    setTransactions(arr);
+  };
+
   return (
     <div className="container">
       <Overview />
-      <InputForm />
-      <TransactionHistory />
+      <InputForm handleAddTransaction={addTransaction} />
+      <TransactionHistory
+        transactions={transactions}
+        handleDeleteTransaction={deleteTransaction}
+      />
     </div>
   );
 };
