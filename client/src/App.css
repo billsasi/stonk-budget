@@ -47,3 +47,35 @@ button:active {
 .negative {
   color: red;
 }
+
+.list {
+}
+
+.row {
+  width: 80vw;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb(205, 206, 207);
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: row;
+  align-items: center;
+}
+
+.row-info {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-evenly;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.del-button {
+  padding: 8px;
+  background-color: rgb(255, 166, 166);
+  border: 1px solid rgb(187, 186, 186);
+  border-radius: 0px;
+}
