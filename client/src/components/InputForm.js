@@ -17,7 +17,7 @@ const InputForm = ({ handleAddTransaction }) => {
     handleAddTransaction({
       id: Math.ceil(Math.random() * 100000),
       name: desc,
-      amt: amt,
+      amt: Number(amt),
     });
     setDesc('');
     setAmt('');

@@ -21,7 +21,7 @@ const App = () => {
 
   return (
     <div className="container">
-      <Overview />
+      <Overview transactions={transactions} />
       <InputForm handleAddTransaction={addTransaction} />
       <TransactionHistory
         transactions={transactions}
