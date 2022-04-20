@@ -28,6 +28,7 @@ button:active {
 
 .overview {
   display: flex;
+  justify-content: space-between;
   width: 100vw;
   max-width: 100%;
   align-items: center;
@@ -52,13 +53,15 @@ button:active {
 }
 
 .row {
+  position: relative;
+  width: 100%;
   width: 80vw;
   border-style: solid;
   border-width: 1px;
   border-color: rgb(205, 206, 207);
   margin: 10px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-content: center;
   flex-direction: row;
   align-items: center;
