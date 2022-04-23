@@ -1,27 +1,31 @@
 import React, { useState } from 'react';
 
 const InputForm = ({ handleAddTransaction }) => {
+  const [transaction, setTransaction] = useState({
+    type: '',
+    description: '',
+    amount: 0,
+    date: new Date().toLocaleDateString(),
+  });
   const [addItem, setAddItem] = useState(false);
-  const [desc, setDesc] = useState('');
-  const [amt, setAmt] = useState('');
 
   const handleDescChange = (e) => {
-    setDesc(e.target.value);
+    setTransaction({ ...transaction, description: e.target.value });
   };
   const handleAmtChange = (e) => {
-    setAmt(e.target.value);
+    setTransaction({ ...transaction, amount: Number(e.target.value) });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     handleAddTransaction({
-      id: Math.ceil(Math.random() * 100000),
-      name: desc,
-      amt: Number(amt),
+      ...transaction,
+      id: Math.ceil(Math.random() * 100000000),
     });
-    setDesc('');
-    setAmt('');
+    setTransaction({ ...transaction, description: '', amount: '' });
   };
+
+  const { description, amount } = transaction;
 
   return (
     <div className="input-form">
@@ -30,10 +34,14 @@ const InputForm = ({ handleAddTransaction }) => {
         <form onSubmit={handleSubmit}>
           <input
             placeholder="Enter transaction"
-            value={desc}
+            value={description}
             onChange={handleDescChange}
           ></input>
-          <input placeholder="$" value={amt} onChange={handleAmtChange}></input>
+          <input
+            placeholder="$"
+            value={amount}
+            onChange={handleAmtChange}
+          ></input>
           <button type="submit">+</button>
         </form>
       )}
