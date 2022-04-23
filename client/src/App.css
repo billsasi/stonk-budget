@@ -79,3 +79,17 @@ button:active {
   border: 1px solid rgb(187, 186, 186);
   border-radius: 0px;
 }
+
+.edit-button {
+  padding: 8px;
+  background-color: rgb(78, 162, 231);
+  border: 1px solid rgb(187, 186, 186);
+  border-radius: 0px;
+}
+
+.save-button {
+  padding: 8px;
+  background-color: rgb(78, 231, 124);
+  border: 1px solid rgb(187, 186, 186);
+  border-radius: 0px;
+}

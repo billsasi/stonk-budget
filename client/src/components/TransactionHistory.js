@@ -1,26 +1,22 @@
-import React from 'react';
+import Transaction from "./Transaction";
 
-const TransactionHistory = ({ transactions, handleDeleteTransaction }) => {
+const TransactionHistory = ({ transactions, handleDeleteTransaction, handleedit}) => {
   return (
-    <div className="list">
+    <>
+    <div className="transactTable">
       {transactions.length === 0 && <div className="row">No transactions</div>}
-      {transactions.map((item) => {
-        return (
-          <div className="row">
-            <div className="row-info">
-              {item.name}
-              <span>{item.amt}</span>
-            </div>
-            <button
-              className="del-button"
-              onClick={() => handleDeleteTransaction(item.id)}
-            >
-              Delete
-            </button>
-          </div>
-        );
-      })}
+      <table>
+      {transactions.length !== 0 && <thead><tr>
+        <th>Description</th>
+        <th>Amount</th>
+        <th></th><th></th></tr></thead>}
+      <tbody>
+      {transactions.map((item, index) => (<Transaction key={index} 
+        transact={item} handleDelete={handleDeleteTransaction} handleEdit={handleedit}/>))}
+      </tbody>
+      </table>
     </div>
+    </>
   );
 };
 
