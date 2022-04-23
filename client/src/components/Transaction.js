@@ -45,7 +45,6 @@ const Transaction = ({transact, handleDelete, handleEdit}) => {
     setAmt(transact.amt);
   },[transact.name, transact.amt])
   return (editItem ? input_entry : reg_entry);
-  // return (reg_entry);
 };
 
 export default Transaction;
