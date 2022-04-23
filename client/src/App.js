@@ -19,6 +19,12 @@ const App = () => {
     setTransactions(arr);
   };
 
+  const handleEdit = (item, id) => {
+    // Find id and edit
+    const updated_list = transactions.map(x => (x.id === id ? {...x, amt: item.amt, name: item.name, category: item.category} : x))
+    setTransactions(updated_list)
+  };
+
   return (
     <div className="container">
       <Overview transactions={transactions} />
@@ -26,6 +32,7 @@ const App = () => {
       <TransactionHistory
         transactions={transactions}
         handleDeleteTransaction={deleteTransaction}
+        handleedit={handleEdit}
       />
     </div>
   );
