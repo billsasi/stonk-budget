@@ -1,31 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 const InputForm = ({ handleAddTransaction }) => {
   const [transaction, setTransaction] = useState({
     type: '',
     description: '',
-    amount: 0,
+    amount: '',
     date: new Date().toLocaleDateString(),
   });
   const [addItem, setAddItem] = useState(false);
+  const inputRef = useRef(null);
 
   const handleDescChange = (e) => {
     setTransaction({ ...transaction, description: e.target.value });
   };
   const handleAmtChange = (e) => {
-    setTransaction({ ...transaction, amount: Number(e.target.value) });
+    if (e.target.value > -1)
+      setTransaction({ ...transaction, amount: Number(e.target.value) });
   };
+
+  const { description, amount } = transaction;
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (description.length < 1 || !amount) return;
     handleAddTransaction({
       ...transaction,
       id: Math.ceil(Math.random() * 100000000),
     });
     setTransaction({ ...transaction, description: '', amount: '' });
+    inputRef.current.focus();
   };
-
-  const { description, amount } = transaction;
 
   return (
     <div className="input-form">
@@ -33,6 +37,7 @@ const InputForm = ({ handleAddTransaction }) => {
       {addItem && (
         <form onSubmit={handleSubmit}>
           <input
+            ref={inputRef}
             placeholder="Enter transaction"
             value={description}
             onChange={handleDescChange}

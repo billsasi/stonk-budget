@@ -12,24 +12,41 @@ const Overview = ({ transactions }) => {
     return sum;
   };
 
-  let percent = 0;
+  const onSliderChange = (e) => {
+    console.log(e.target.value);
+    setAvailable((income - 0.01 * e.target.value * income).toFixed(2));
+  };
+
+  let val;
   function valuetext(value) {
-    percent = value;
+    val = value;
   }
 
   const net = income - getBal();
 
   useEffect(() => {
-    setAvailable((income - 0.01 * percent * income).toFixed(2));
-  }, [income, percent]);
+    setAvailable((income - 0.01 * val * income).toFixed(2));
+  }, [income]);
+
+  const options = {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  };
 
   return (
     <>
       <div className="overview">
         <div className="balance-info">
-          <h2>Available Income: ${available}</h2>
+          <h2>
+            Available Income: $
+            {Number(parseFloat(available).toFixed(2)).toLocaleString(
+              'en',
+              options
+            )}
+          </h2>
           <h1 className={net > -1 ? 'positive' : 'negative'}>
-            Balance ${net.toFixed(2)}
+            Balance $
+            {Number(parseFloat(net).toFixed(2)).toLocaleString('en', options)}
           </h1>
         </div>
         <div>
@@ -43,9 +60,10 @@ const Overview = ({ transactions }) => {
       <Box className="savings-slider" sx={{ width: 400 }}>
         <h3>Enter what % you want to save:</h3>
         <Slider
+          onChange={onSliderChange}
+          getAriaValueText={valuetext}
           aria-label="Savings Percent"
           defaultValue={20}
-          getAriaValueText={valuetext}
           valueLabelDisplay="auto"
           step={10}
           marks
