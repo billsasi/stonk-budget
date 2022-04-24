@@ -13,19 +13,17 @@ const Transaction = ({ transact, handleDelete, handleEdit }) => {
   };
 
   const handleEditSave = (e) => {
+    console.log(transact);
     handleEdit(
-      {
-        description: newDesc,
-        amount: Number(newAmt),
-      },
-      transact.id
+      { ...transact, description: newDesc, amount: Number(newAmt) },
+      transact._id
     );
     setEditItem(!editItem);
   };
 
   const del_button = (
     <td>
-      <button className="del-button" onClick={() => handleDelete(transact.id)}>
+      <button className="del-button" onClick={() => handleDelete(transact._id)}>
         Delete
       </button>
     </td>
@@ -41,7 +39,7 @@ const Transaction = ({ transact, handleDelete, handleEdit }) => {
     <td>
       <button
         className="save-button"
-        onClick={() => handleEditSave(transact.id)}
+        onClick={() => handleEditSave(transact._id)}
       >
         Save
       </button>
