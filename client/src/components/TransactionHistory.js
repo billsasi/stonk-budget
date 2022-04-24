@@ -14,6 +14,7 @@ const TransactionHistory = ({
         {transactions.length !== 0 && (
           <thead>
             <tr>
+              <th>Category</th>
               <th>Description</th>
               <th>Amount</th>
               <th></th>

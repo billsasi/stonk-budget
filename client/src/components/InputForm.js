@@ -1,10 +1,13 @@
+import Select from 'react-select';
 import React, { useState, useRef } from 'react';
+import categoryOptions from '../constants';
 
 const InputForm = ({ handleAddTransaction }) => {
   const [transaction, setTransaction] = useState({
     type: '',
     description: '',
     amount: '',
+    category: categoryOptions[0].label,
     date: new Date().toLocaleDateString(),
   });
   const [addItem, setAddItem] = useState(false);
@@ -17,8 +20,12 @@ const InputForm = ({ handleAddTransaction }) => {
     if (e.target.value > -1)
       setTransaction({ ...transaction, amount: Number(e.target.value) });
   };
+  const handleCatChange = (cat) => {
+    console.log(cat);
+    setTransaction({ ...transaction, category: cat.label });
+  };
 
-  const { description, amount } = transaction;
+  const { description, amount, category } = transaction;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,6 +43,11 @@ const InputForm = ({ handleAddTransaction }) => {
       <button onClick={() => setAddItem(!addItem)}>Add Item</button>
       {addItem && (
         <form onSubmit={handleSubmit}>
+          <Select
+            options={categoryOptions}
+            getValue={category}
+            onChange={handleCatChange}
+          ></Select>
           <input
             ref={inputRef}
             placeholder="Enter transaction"
