@@ -25,8 +25,11 @@ const Overview = ({ transactions }) => {
   const net = income - getBal();
 
   useEffect(() => {
+    setIncome(1000);
+  }, []);
+  useEffect(() => {
     setAvailable((income - 0.01 * val * income).toFixed(2));
-  }, [income]);
+  }, [income, val]);
 
   const options = {
     minimumFractionDigits: 2,
@@ -54,6 +57,7 @@ const Overview = ({ transactions }) => {
           <input
             placeholder="Income"
             onChange={(e) => setIncome(e.target.value)}
+            value={income}
           ></input>
         </div>
       </div>

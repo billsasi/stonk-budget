@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Select from 'react-select';
 
 const Transaction = ({ transact, handleDelete, handleEdit }) => {
   const [editItem, setEditItem] = useState(false);
@@ -50,6 +49,7 @@ const Transaction = ({ transact, handleDelete, handleEdit }) => {
   );
   const reg_entry = (
     <tr>
+      <td>{transact.category}</td>
       <td>{transact.description}</td>
       <td>{transact.amount}</td>
       {del_button}
