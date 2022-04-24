@@ -1,3 +1,4 @@
+require('dotenv').config({ path: '../.env' });
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -9,8 +10,7 @@ const port = 8000;
 app.use(cors());
 app.use(express.json());
 
-const uri =
-  'mongodb+srv://billsasi:8q9Wdr5bvkY8iLdl@stonkbudget.cvtv9.mongodb.net/budget_data?retryWrites=true&w=majority';
+const uri = process.env.MONGO_URI;
 mongoose.connect(uri, {
   useNewUrlParser: true,
   useCreateIndex: true,
