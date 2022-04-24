@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Overview from './components/Overview';
 import TransactionHistory from './components/TransactionHistory';
 import InputForm from './components/InputForm';
+import axios from 'axios';
 import './App.css';
 
 // hi
@@ -9,24 +10,34 @@ import './App.css';
 const App = () => {
   const [transactions, setTransactions] = useState([]);
 
-  const addTransaction = (item) => {
+  useEffect(() => {
+    async function fetchData() {
+      const { data } = await axios.get('http://localhost:8000/transactions/');
+      setTransactions(data);
+    }
+    fetchData();
+  }, []);
+
+  const addTransaction = async (item) => {
+    await axios.post('http://localhost:8000/transactions/add/', item);
     setTransactions([item, ...transactions]);
   };
 
-  const deleteTransaction = (id) => {
-    const arr = transactions.filter((item) => item.id !== id);
+  const deleteTransaction = async (id) => {
+    await axios.delete(`http://localhost:8000/transactions/${id}`);
+    const arr = transactions.filter((item) => item._id !== id);
     setTransactions(arr);
   };
 
-  const handleEdit = (item, id) => {
+  const handleEdit = async (item, id) => {
+    await axios.post(`http://localhost:8000/transactions/update/${id}`, item);
     // Find id and edit
     const updated_list = transactions.map((x) =>
-      x.id === id
+      x._id === id
         ? {
             ...x,
             amount: item.amount,
             description: item.description,
-            category: item.category,
           }
         : x
     );

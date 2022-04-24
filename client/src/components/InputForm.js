@@ -30,10 +30,7 @@ const InputForm = ({ handleAddTransaction }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (description.length < 1 || !amount) return;
-    handleAddTransaction({
-      ...transaction,
-      id: Math.ceil(Math.random() * 100000000),
-    });
+    handleAddTransaction(transaction);
     setTransaction({ ...transaction, description: '', amount: '' });
     inputRef.current.focus();
   };
