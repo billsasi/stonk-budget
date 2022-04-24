@@ -19,8 +19,11 @@ const App = () => {
   }, []);
 
   const addTransaction = async (item) => {
-    await axios.post('http://localhost:8000/transactions/add/', item);
-    setTransactions([item, ...transactions]);
+    const { data } = await axios.post(
+      'http://localhost:8000/transactions/add/',
+      item
+    );
+    setTransactions([data, ...transactions]);
   };
 
   const deleteTransaction = async (id) => {

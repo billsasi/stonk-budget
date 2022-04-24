@@ -23,7 +23,7 @@ router.route('/add').post((req, res) => {
 
   newTransaction
     .save()
-    .then(() => res.json('Transaction added!'))
+    .then(() => res.json(newTransaction))
     .catch((err) => res.status(400).json('Error: ' + err));
 });
 
