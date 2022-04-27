@@ -14,12 +14,27 @@ const App = () => {
     year: new Date().getFullYear(),
   });
 
-  const handleIncMonth = () => {};
+  const handleIncMonth = () => {
+    const newMonth = month.month === 12 ? 1 : month.month + 1;
+    const newYear = newMonth == 1 ? month.year + 1 : month.year;
+    setMonth({ month: newMonth, year: newYear });
+  };
 
-  const handleDecMonth = () => {};
+  // const handleIncMonth = () => {
+  //   setMonth({
+  //     month: month.month === 12 ? 1 : month.month + 1,
+  //     year: month.month == 1 ? month.year + 1 : month.year,
+  //   });
+  //   console.log(month);
+  // };
+
+  const handleDecMonth = () => {
+    const newMonth = month.month === 1 ? 12 : month.month - 1;
+    const newYear = newMonth == 12 ? month.year - 1 : month.year;
+    setMonth({ month: newMonth, year: newYear });
+  };
 
   useEffect(() => {
-    console.log(month);
     async function fetchData() {
       const { data } = await axios.get('http://localhost:8000/transactions/');
       setTransactions(data);
@@ -56,9 +71,11 @@ const App = () => {
     setTransactions(updated_list);
   };
 
+  console.log(month);
+
   return (
     <div className="container">
-      <Overview transactions={transactions} />
+      <Overview transactions={transactions} month={month} />
       <InputForm handleAddTransaction={addTransaction} />
       <div className="month-list">
         <button className="nav" onClick={handleDecMonth}>
@@ -68,6 +85,7 @@ const App = () => {
           transactions={transactions}
           handleDeleteTransaction={deleteTransaction}
           handleedit={handleEdit}
+          month={month}
         />
         <button className="nav" onClick={handleIncMonth}>
           Next

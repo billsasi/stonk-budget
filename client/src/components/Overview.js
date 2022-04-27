@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 
-const Overview = ({ transactions }) => {
+const Overview = ({ transactions, month }) => {
   const [income, setIncome] = useState(0);
   const [available, setAvailable] = useState(income);
 
@@ -38,6 +38,9 @@ const Overview = ({ transactions }) => {
 
   return (
     <>
+      <h2>
+        {month.month}/{month.year}
+      </h2>
       <div className="overview">
         <div className="balance-info">
           <h2>
