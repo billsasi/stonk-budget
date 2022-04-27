@@ -3,9 +3,11 @@ import Overview from './components/Overview';
 import TransactionHistory from './components/TransactionHistory';
 import InputForm from './components/InputForm';
 import axios from 'axios';
+import { Line } from 'react-chartjs-2';
+import { Chart, registerables } from 'chart.js';
 import './App.css';
-
-// hi
+import { compareMonths } from './Utils.js';
+Chart.register(...registerables);
 
 const App = () => {
   const [transactions, setTransactions] = useState([]);
@@ -13,24 +15,36 @@ const App = () => {
     month: new Date().getMonth() + 1,
     year: new Date().getFullYear(),
   });
+  const [monthTotals, setMonthTotals] = useState({});
+
+  useEffect(() => {
+    const monthAmounts = {};
+    let label = '';
+    transactions.forEach((tr) => {
+      label = `${tr.date.month}/${tr.date.year}`;
+      if (monthAmounts[label]) monthAmounts[label] += tr.amount;
+      else monthAmounts[label] = tr.amount;
+    });
+    const sortedAmounts = [];
+    const sortedMonths = Object.keys(monthAmounts).sort(compareMonths);
+    sortedMonths.forEach((mo) => {
+      sortedAmounts.push(monthAmounts[mo]);
+    });
+    setMonthTotals({
+      labels: sortedMonths,
+      values: sortedAmounts,
+    });
+  }, [transactions]);
 
   const handleIncMonth = () => {
     const newMonth = month.month === 12 ? 1 : month.month + 1;
-    const newYear = newMonth == 1 ? month.year + 1 : month.year;
+    const newYear = newMonth === 1 ? month.year + 1 : month.year;
     setMonth({ month: newMonth, year: newYear });
   };
 
-  // const handleIncMonth = () => {
-  //   setMonth({
-  //     month: month.month === 12 ? 1 : month.month + 1,
-  //     year: month.month == 1 ? month.year + 1 : month.year,
-  //   });
-  //   console.log(month);
-  // };
-
   const handleDecMonth = () => {
     const newMonth = month.month === 1 ? 12 : month.month - 1;
-    const newYear = newMonth == 12 ? month.year - 1 : month.year;
+    const newYear = newMonth === 12 ? month.year - 1 : month.year;
     setMonth({ month: newMonth, year: newYear });
   };
 
@@ -71,11 +85,25 @@ const App = () => {
     setTransactions(updated_list);
   };
 
-  console.log(month);
+  const data = {
+    labels: monthTotals.labels,
+    datasets: [
+      {
+        label: 'Total Spending over Time',
+        data: monthTotals.values,
+        backgroundColor: 'rgba(75,192,192,0.2)',
+        borderColor: 'rgba(75,192,192,1)',
+      },
+    ],
+  };
 
   return (
     <div className="container">
       <Overview transactions={transactions} month={month} />
+      <div className="chart" style={{ width: '600px' }}>
+        <Line data={data} />
+      </div>
+
       <InputForm handleAddTransaction={addTransaction} />
       <div className="month-list">
         <button className="nav" onClick={handleDecMonth}>

@@ -31,7 +31,6 @@ const TransactionHistory = ({
               );
             })
             .map((item, key) => {
-              console.log(item);
               return (
                 <Transaction
                   key={key}

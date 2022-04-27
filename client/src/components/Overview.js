@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { monthDict } from '../Utils';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 
@@ -39,7 +40,7 @@ const Overview = ({ transactions, month }) => {
   return (
     <>
       <h2>
-        {month.month}/{month.year}
+        {monthDict[month.month]} {month.year}
       </h2>
       <div className="overview">
         <div className="balance-info">

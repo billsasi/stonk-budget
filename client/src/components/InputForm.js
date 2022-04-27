@@ -1,6 +1,6 @@
 import Select from 'react-select';
 import React, { useState, useRef } from 'react';
-import categoryOptions from '../constants';
+import { categoryOptions } from '../Utils';
 
 const InputForm = ({ handleAddTransaction }) => {
   const [transaction, setTransaction] = useState({
@@ -41,7 +41,7 @@ const InputForm = ({ handleAddTransaction }) => {
     });
   };
 
-  const { description, amount, category, date } = transaction;
+  const { description, amount, category } = transaction;
 
   const handleSubmit = (e) => {
     e.preventDefault();
