@@ -12,7 +12,7 @@ router.route('/add').post((req, res) => {
   const category = req.body.category;
   const description = req.body.description;
   const amount = Number(req.body.amount);
-  const date = Date.parse(req.body.date);
+  const date = req.body.date;
 
   const newTransaction = new Transaction({
     description,

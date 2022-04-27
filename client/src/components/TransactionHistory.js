@@ -4,9 +4,8 @@ const TransactionHistory = ({
   transactions,
   handleDeleteTransaction,
   handleedit,
+  month,
 }) => {
-  console.log(transactions.length);
-
   return (
     <div className="transactTable">
       {transactions.length === 0 && <div>No transactions</div>}
@@ -17,22 +16,30 @@ const TransactionHistory = ({
               <th>Category</th>
               <th>Description</th>
               <th>Amount</th>
+              <th>Date</th>
               <th></th>
               <th></th>
             </tr>
           </thead>
         )}
         <tbody>
-          {transactions.map((item, key) => {
-            return (
-              <Transaction
-                key={key}
-                transact={item}
-                handleDelete={handleDeleteTransaction}
-                handleEdit={handleedit}
-              />
-            );
-          })}
+          {transactions
+            .filter((transact) => {
+              return (
+                transact.date.month === month.month &&
+                transact.date.year === month.year
+              );
+            })
+            .map((item, key) => {
+              return (
+                <Transaction
+                  key={key}
+                  transact={item}
+                  handleDelete={handleDeleteTransaction}
+                  handleEdit={handleedit}
+                />
+              );
+            })}
         </tbody>
       </table>
     </div>

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { monthDict } from '../Utils';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 
-const Overview = ({ transactions }) => {
+const Overview = ({ transactions, month }) => {
   const [income, setIncome] = useState(0);
   const [available, setAvailable] = useState(income);
 
-  const getBal = () => {
+  const getTotalExpense = () => {
     let sum = 0;
     transactions.forEach((item) => (sum += item.amount));
     return sum;
@@ -22,7 +23,7 @@ const Overview = ({ transactions }) => {
     val = value;
   }
 
-  const net = income - getBal();
+  const net = income - getTotalExpense();
 
   useEffect(() => {
     setIncome(1000);
@@ -38,6 +39,9 @@ const Overview = ({ transactions }) => {
 
   return (
     <>
+      <h2>
+        {monthDict[month.month]} {month.year}
+      </h2>
       <div className="overview">
         <div className="balance-info">
           <h2>
@@ -48,9 +52,15 @@ const Overview = ({ transactions }) => {
             )}
           </h2>
           <h1 className={net > -1 ? 'positive' : 'negative'}>
-            Balance $
-            {Number(parseFloat(net).toFixed(2)).toLocaleString('en', options)}
+            Total: $
+            {Number(parseFloat(getTotalExpense()).toFixed(2)).toLocaleString(
+              'en',
+              options
+            )}
           </h1>
+          {available < getTotalExpense() && (
+            <h3 style={{ color: 'red' }}>Budget Exceeded</h3>
+          )}
         </div>
         <div>
           <span>Monthly Income: </span>
