@@ -17,6 +17,7 @@ const TransactionHistory = ({
               <th>Category</th>
               <th>Description</th>
               <th>Amount</th>
+              <th>Date</th>
               <th></th>
               <th></th>
             </tr>

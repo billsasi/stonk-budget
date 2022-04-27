@@ -8,10 +8,15 @@ const InputForm = ({ handleAddTransaction }) => {
     description: '',
     amount: '',
     category: categoryOptions[0].label,
-    date: new Date().toLocaleDateString(),
+    date: {
+      day: new Date().getDate(),
+      month: new Date().getMonth(),
+      year: new Date().getFullYear(),
+    },
   });
   const [addItem, setAddItem] = useState(false);
   const inputRef = useRef(null);
+  const [dateStr, setDateStr] = useState('');
 
   const handleDescChange = (e) => {
     setTransaction({ ...transaction, description: e.target.value });
@@ -24,14 +29,25 @@ const InputForm = ({ handleAddTransaction }) => {
     console.log(cat);
     setTransaction({ ...transaction, category: cat.label });
   };
+  const handleDateChange = (e) => {
+    setDateStr(e.target.value);
+    setTransaction({
+      ...transaction,
+      date: {
+        day: Number(e.target.value.split('/')[1]),
+        month: Number(e.target.value.split('/')[0]),
+        year: new Date().getFullYear(),
+      },
+    });
+  };
 
-  const { description, amount, category } = transaction;
+  const { description, amount, category, date } = transaction;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (description.length < 1 || !amount) return;
     handleAddTransaction(transaction);
-    setTransaction({ ...transaction, description: '', amount: '' });
+    setTransaction({ ...transaction, description: '', amount: '', date: '' });
     inputRef.current.focus();
   };
 
@@ -55,6 +71,11 @@ const InputForm = ({ handleAddTransaction }) => {
             placeholder="$"
             value={amount}
             onChange={handleAmtChange}
+          ></input>
+          <input
+            placeholder="Date: D/M"
+            value={dateStr}
+            onChange={handleDateChange}
           ></input>
           <button type="submit">+</button>
         </form>

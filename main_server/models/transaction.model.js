@@ -7,7 +7,7 @@ const transactionSchema = new Schema(
     //type: { type: String, required: true },
     description: { type: String, required: true },
     amount: { type: Number, required: true },
-    date: { type: Date, required: true },
+    date: { type: Schema.Types.Mixed, required: true },
     category: { type: String, required: true },
   },
   {

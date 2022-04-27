@@ -6,7 +6,7 @@ const Overview = ({ transactions }) => {
   const [income, setIncome] = useState(0);
   const [available, setAvailable] = useState(income);
 
-  const getBal = () => {
+  const getTotalExpense = () => {
     let sum = 0;
     transactions.forEach((item) => (sum += item.amount));
     return sum;
@@ -22,7 +22,7 @@ const Overview = ({ transactions }) => {
     val = value;
   }
 
-  const net = income - getBal();
+  const net = income - getTotalExpense();
 
   useEffect(() => {
     setIncome(1000);
@@ -48,9 +48,15 @@ const Overview = ({ transactions }) => {
             )}
           </h2>
           <h1 className={net > -1 ? 'positive' : 'negative'}>
-            Balance $
-            {Number(parseFloat(net).toFixed(2)).toLocaleString('en', options)}
+            Total: $
+            {Number(parseFloat(getTotalExpense()).toFixed(2)).toLocaleString(
+              'en',
+              options
+            )}
           </h1>
+          {available < getTotalExpense() && (
+            <h3 style={{ color: 'red' }}>Budget Exceeded</h3>
+          )}
         </div>
         <div>
           <span>Monthly Income: </span>

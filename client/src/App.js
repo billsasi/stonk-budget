@@ -9,8 +9,17 @@ import './App.css';
 
 const App = () => {
   const [transactions, setTransactions] = useState([]);
+  const [month, setMonth] = useState({
+    month: new Date().getMonth() + 1,
+    year: new Date().getFullYear(),
+  });
+
+  const handleIncMonth = () => {};
+
+  const handleDecMonth = () => {};
 
   useEffect(() => {
+    console.log(month);
     async function fetchData() {
       const { data } = await axios.get('http://localhost:8000/transactions/');
       setTransactions(data);
@@ -51,11 +60,19 @@ const App = () => {
     <div className="container">
       <Overview transactions={transactions} />
       <InputForm handleAddTransaction={addTransaction} />
-      <TransactionHistory
-        transactions={transactions}
-        handleDeleteTransaction={deleteTransaction}
-        handleedit={handleEdit}
-      />
+      <div className="month-list">
+        <button className="nav" onClick={handleDecMonth}>
+          Prev
+        </button>
+        <TransactionHistory
+          transactions={transactions}
+          handleDeleteTransaction={deleteTransaction}
+          handleedit={handleEdit}
+        />
+        <button className="nav" onClick={handleIncMonth}>
+          Next
+        </button>
+      </div>
     </div>
   );
 };

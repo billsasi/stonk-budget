@@ -113,3 +113,13 @@ td {
   flex-direction: column;
   align-items: center;
 }
+
+.month-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.nav {
+  height: 50px;
+}

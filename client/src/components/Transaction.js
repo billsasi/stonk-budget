@@ -49,7 +49,10 @@ const Transaction = ({ transact, handleDelete, handleEdit }) => {
     <tr>
       <td>{transact.category}</td>
       <td>{transact.description}</td>
-      <td>{transact.amount}</td>
+      <td style={{ color: 'green' }}>${transact.amount}</td>
+      <td>
+        {transact.date.month}/{transact.date.day}
+      </td>
       {del_button}
       {edit_button}
     </tr>
