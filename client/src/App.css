@@ -85,24 +85,26 @@ button:active {
 }
 
 .del-button {
-  padding: 8px;
-  background-color: rgb(255, 166, 166);
+  padding: 10px;
+  color: white;
+  background-color: rgb(246, 77, 77);
   border: 1px solid rgb(187, 186, 186);
-  border-radius: 0px;
+  border-radius: 5px;
 }
 
 .edit-button {
-  padding: 8px;
+  padding: 10px;
+  color: white;
   background-color: rgb(78, 162, 231);
   border: 1px solid rgb(187, 186, 186);
-  border-radius: 0px;
+  border-radius: 5px;
 }
 
 .save-button {
   padding: 8px;
   background-color: rgb(78, 231, 124);
   border: 1px solid rgb(187, 186, 186);
-  border-radius: 0px;
+  border-radius: 5px;
 }
 
 input {
@@ -126,7 +128,8 @@ td {
 }
 
 .nav {
-  height: 50px;
+  height: 10vh;
+  width: 4vw;
 }
 
 .income-button {
@@ -138,10 +141,11 @@ td {
   padding: 10px;
   padding-top: 3px;
   margin-left: 10px;
+
   width: 100vw;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   border-bottom-style: solid;
   border-bottom-width: 1px;
@@ -172,4 +176,29 @@ a:hover {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+}
+
+.month-list {
+  width: 60vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+}
+
+.logout {
+  width: 20vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-right: 10em;
 }
