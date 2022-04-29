@@ -3,19 +3,28 @@ import { monthDict } from '../Utils';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 
-const Overview = ({ transactions, month }) => {
+const Overview = ({ transactions, month, handleIncomeChange }) => {
   const [income, setIncome] = useState(0);
+  const [edit, setEdit] = useState(false);
   const [available, setAvailable] = useState(income);
 
   const getTotalExpense = () => {
     let sum = 0;
-    transactions.forEach((item) => (sum += item.amount));
+    transactions.forEach((item) => {
+      if (item.date.month === month.month) sum += item.amount;
+    });
     return sum;
   };
 
   const onSliderChange = (e) => {
     console.log(e.target.value);
     setAvailable((income - 0.01 * e.target.value * income).toFixed(2));
+  };
+
+  const submitIncome = (e) => {
+    e.preventDefault();
+    handleIncomeChange(income, month);
+    setEdit(false);
   };
 
   let val;
@@ -26,7 +35,7 @@ const Overview = ({ transactions, month }) => {
   const net = income - getTotalExpense();
 
   useEffect(() => {
-    setIncome(1000);
+    setIncome(5000);
   }, []);
   useEffect(() => {
     setAvailable((income - 0.01 * val * income).toFixed(2));
@@ -39,9 +48,6 @@ const Overview = ({ transactions, month }) => {
 
   return (
     <>
-      <h2>
-        {monthDict[month.month]} {month.year}
-      </h2>
       <div className="overview">
         <div className="balance-info">
           <h2>
@@ -62,13 +68,27 @@ const Overview = ({ transactions, month }) => {
             <h3 style={{ color: 'red' }}>Budget Exceeded</h3>
           )}
         </div>
-        <div>
-          <span>Monthly Income: </span>
-          <input
-            placeholder="Income"
-            onChange={(e) => setIncome(e.target.value)}
-            value={income}
-          ></input>
+        <div className="monthly-budget">
+          <h2>
+            {monthDict[month.month]} {month.year}
+          </h2>
+          <div>
+            <span>Budget: ${income} </span>
+            {edit ? (
+              <form onSubmit={submitIncome}>
+                <input
+                  placeholder="Income"
+                  onChange={(e) => setIncome(e.target.value)}
+                  value={income}
+                ></input>
+                <button className="income-button">Submit</button>
+              </form>
+            ) : (
+              <button className="income-button" onClick={() => setEdit(true)}>
+                Change
+              </button>
+            )}
+          </div>
         </div>
       </div>
       <Box className="savings-slider" sx={{ width: 400 }}>

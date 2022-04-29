@@ -42,11 +42,13 @@ router.route('/:id').delete((req, res) => {
 router.route('/update/:id').post((req, res) => {
   Transaction.findById(req.params.id)
     .then((transaction) => {
+      console.log(transaction);
       //transaction.type = req.body.type;
       transaction.description = req.body.description;
       transaction.amount = Number(req.body.amount);
-      transaction.date = Date.parse(req.body.date);
+      transaction.date = req.body.date;
       transaction.category = req.body.category;
+      transaction.date = req.body.date;
 
       transaction
         .save()

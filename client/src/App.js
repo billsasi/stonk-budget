@@ -6,7 +6,7 @@ import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
 import './App.css';
-import { compareMonths } from './Utils.js';
+import { compareMonths, NavBar } from './Utils.js';
 Chart.register(...registerables);
 
 const App = () => {
@@ -16,6 +16,11 @@ const App = () => {
     year: new Date().getFullYear(),
   });
   const [monthTotals, setMonthTotals] = useState({});
+  const [monthIncomes, setMonthIncomes] = useState({});
+
+  const updateMonthIncome = (inc, mo) => {
+    setMonthIncomes({ ...monthIncomes, mo: inc });
+  };
 
   useEffect(() => {
     const monthAmounts = {};
@@ -71,6 +76,7 @@ const App = () => {
   };
 
   const handleEdit = async (item, id) => {
+    console.log(item);
     await axios.post(`http://localhost:8000/transactions/update/${id}`, item);
     // Find id and edit
     const updated_list = transactions.map((x) =>
@@ -79,6 +85,8 @@ const App = () => {
             ...x,
             amount: item.amount,
             description: item.description,
+            category: item.category,
+            date: item.date,
           }
         : x
     );
@@ -99,7 +107,13 @@ const App = () => {
 
   return (
     <div className="container">
-      <Overview transactions={transactions} month={month} />
+      <NavBar />
+
+      <Overview
+        transactions={transactions}
+        month={month}
+        handleIncomeChange={updateMonthIncome}
+      />
       <div className="chart" style={{ width: '600px' }}>
         <Line data={data} />
       </div>

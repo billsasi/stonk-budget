@@ -22,8 +22,7 @@ const InputForm = ({ handleAddTransaction }) => {
     setTransaction({ ...transaction, description: e.target.value });
   };
   const handleAmtChange = (e) => {
-    if (e.target.value > -1)
-      setTransaction({ ...transaction, amount: Number(e.target.value) });
+    setTransaction({ ...transaction, amount: Number(e.target.value) });
   };
   const handleCatChange = (cat) => {
     console.log(cat);
@@ -69,7 +68,8 @@ const InputForm = ({ handleAddTransaction }) => {
           ></input>
           <input
             placeholder="$"
-            value={amount}
+            type="number"
+            value={amount < 1 ? '' : amount}
             onChange={handleAmtChange}
           ></input>
           <input
