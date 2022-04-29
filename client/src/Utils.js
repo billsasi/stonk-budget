@@ -39,7 +39,7 @@ export function compareMonths(stra, strb) {
   }
 }
 
-export function NavBar() {
+export function NavBar({ handleLogout, name }) {
   return (
     <div className="nav-bar">
       <div className="nav-text">
@@ -48,6 +48,10 @@ export function NavBar() {
         </Link>
         <Link to="/about">About</Link>
         <Link to="/stocks">Stocks</Link>
+      </div>
+      <div className="logout">
+        <span>{name}</span>
+        <button onClick={handleLogout}> Logout</button>
       </div>
     </div>
   );

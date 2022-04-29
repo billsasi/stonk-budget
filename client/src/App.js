@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import GoogleLogin from 'react-google-login';
 import Overview from './components/Overview';
 import TransactionHistory from './components/TransactionHistory';
 import InputForm from './components/InputForm';
@@ -10,6 +12,27 @@ import { compareMonths, NavBar } from './Utils.js';
 Chart.register(...registerables);
 
 const App = () => {
+  const [loginData, setLoginData] = useState(
+    localStorage.getItem('loginData') ? localStorage.getItem('loginData') : null
+  );
+  const handleFailure = (result) => {
+    alert(result);
+  };
+
+  const handleLogin = async (gData) => {
+    const { data } = await axios.post(
+      'http://localhost:8000/api/google-login',
+      { token: gData.tokenId }
+    );
+    setLoginData(data);
+    localStorage.setItem('loginData', data);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('loginData');
+    setLoginData(null);
+  };
+
   const [transactions, setTransactions] = useState([]);
   const [month, setMonth] = useState({
     month: new Date().getMonth() + 1,
@@ -105,34 +128,52 @@ const App = () => {
     ],
   };
 
+  let name = '';
+  if (loginData) name = loginData.name;
+
   return (
     <div className="container">
-      <NavBar />
+      {loginData ? (
+        <>
+          <NavBar handleLogout={handleLogout} name={name} />
+          <Overview
+            transactions={transactions}
+            month={month}
+            handleIncomeChange={updateMonthIncome}
+          />
+          <div className="chart" style={{ width: '600px' }}>
+            <Line data={data} />
+          </div>
 
-      <Overview
-        transactions={transactions}
-        month={month}
-        handleIncomeChange={updateMonthIncome}
-      />
-      <div className="chart" style={{ width: '600px' }}>
-        <Line data={data} />
-      </div>
-
-      <InputForm handleAddTransaction={addTransaction} />
-      <div className="month-list">
-        <button className="nav" onClick={handleDecMonth}>
-          Prev
-        </button>
-        <TransactionHistory
-          transactions={transactions}
-          handleDeleteTransaction={deleteTransaction}
-          handleedit={handleEdit}
-          month={month}
-        />
-        <button className="nav" onClick={handleIncMonth}>
-          Next
-        </button>
-      </div>
+          <InputForm handleAddTransaction={addTransaction} />
+          <div className="month-list">
+            <button className="nav" onClick={handleDecMonth}>
+              <FaArrowLeft></FaArrowLeft>
+            </button>
+            <TransactionHistory
+              transactions={transactions}
+              handleDeleteTransaction={deleteTransaction}
+              handleedit={handleEdit}
+              month={month}
+            />
+            <button className="nav" onClick={handleIncMonth}>
+              <FaArrowRight></FaArrowRight>
+            </button>
+          </div>
+        </>
+      ) : (
+        <div className="login">
+          <h1>Stonk Budget</h1>
+          <h2>Log in with Google</h2>
+          <GoogleLogin
+            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+            buttonText="Log in with Google"
+            onSuccess={handleLogin}
+            onFailure={handleFailure}
+            cookiePolicy={'single_host_origin'}
+          ></GoogleLogin>
+        </div>
+      )}
     </div>
   );
 };

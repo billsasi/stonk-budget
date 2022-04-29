@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { FiEdit2, FiDelete } from 'react-icons/fi';
 import { categoryOptions } from '../Utils';
 import Select from 'react-select';
 
@@ -6,7 +7,7 @@ const Transaction = ({ transact, handleDelete, handleEdit }) => {
   const [editItem, setEditItem] = useState(false);
   const [newDesc, setNewDesc] = useState(transact.description);
   const [newAmt, setNewAmt] = useState(transact.amount);
-  const [newCat, setNewCat] = useState(transact.category);
+  const [newCat, setNewCat] = useState({ label: transact.category, value: '' });
   const [str, setStr] = useState(
     `${new Date().getMonth() + 1}/${new Date().getDate()}`
   );
@@ -33,7 +34,7 @@ const Transaction = ({ transact, handleDelete, handleEdit }) => {
     });
   }, [str]);
 
-  const handleEditSave = (e) => {
+  const handleEditSave = () => {
     console.log([newDesc, newAmt, newCat, newDate]);
     handleEdit(
       {
@@ -51,23 +52,20 @@ const Transaction = ({ transact, handleDelete, handleEdit }) => {
   const del_button = (
     <td>
       <button className="del-button" onClick={() => handleDelete(transact._id)}>
-        Delete
+        <FiDelete />
       </button>
     </td>
   );
   const edit_button = (
     <td>
       <button className="edit-button" onClick={() => setEditItem(!editItem)}>
-        Edit
+        <FiEdit2 />
       </button>
     </td>
   );
   const save_button = (
     <td>
-      <button
-        className="save-button"
-        onClick={() => handleEditSave(transact._id)}
-      >
+      <button className="save-button" onClick={() => handleEditSave()}>
         Save
       </button>
     </td>
@@ -89,7 +87,7 @@ const Transaction = ({ transact, handleDelete, handleEdit }) => {
       <td>
         <Select
           options={categoryOptions}
-          defaultValue={transact.category}
+          defaultValue={newCat}
           onChange={handleCatChange}
         ></Select>
       </td>
