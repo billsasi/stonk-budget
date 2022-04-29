@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export const categoryOptions = [
   { value: 'misc', label: 'Miscellaneous' },
   { value: 'car', label: 'Car' },
@@ -35,4 +37,18 @@ export function compareMonths(stra, strb) {
     if (amonth - bmonth > 0) return 1;
     else return -1;
   }
+}
+
+export function NavBar() {
+  return (
+    <div className="nav-bar">
+      <div className="nav-text">
+        <Link className="title" to="/">
+          Stonk Budget
+        </Link>
+        <Link to="/about">About</Link>
+        <Link to="/stocks">Stocks</Link>
+      </div>
+    </div>
+  );
 }

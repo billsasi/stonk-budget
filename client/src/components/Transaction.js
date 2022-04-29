@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import { categoryOptions } from '../Utils';
+import Select from 'react-select';
 
 const Transaction = ({ transact, handleDelete, handleEdit }) => {
   const [editItem, setEditItem] = useState(false);
   const [newDesc, setNewDesc] = useState(transact.description);
   const [newAmt, setNewAmt] = useState(transact.amount);
+  const [newCat, setNewCat] = useState(transact.category);
+  const [str, setStr] = useState(
+    `${new Date().getMonth() + 1}/${new Date().getDate()}`
+  );
+  const [newDate, setNewDate] = useState({});
 
   const handleDescChange = (e) => {
     setNewDesc(e.target.value);
@@ -11,11 +18,31 @@ const Transaction = ({ transact, handleDelete, handleEdit }) => {
   const handleAmtChange = (e) => {
     setNewAmt(e.target.value);
   };
+  const handleCatChange = (cat) => {
+    setNewCat(cat);
+  };
+  const handleDateChange = (e) => {
+    setStr(e.target.value);
+  };
+
+  useEffect(() => {
+    setNewDate({
+      day: Number(str.split('/')[1]),
+      month: Number(str.split('/')[0]),
+      year: new Date().getFullYear(),
+    });
+  }, [str]);
 
   const handleEditSave = (e) => {
-    console.log(transact);
+    console.log([newDesc, newAmt, newCat, newDate]);
     handleEdit(
-      { ...transact, description: newDesc, amount: Number(newAmt) },
+      {
+        ...transact,
+        description: newDesc,
+        amount: Number(newAmt),
+        category: newCat.label,
+        date: newDate,
+      },
       transact._id
     );
     setEditItem(!editItem);
@@ -60,10 +87,20 @@ const Transaction = ({ transact, handleDelete, handleEdit }) => {
   const input_entry = (
     <tr>
       <td>
+        <Select
+          options={categoryOptions}
+          defaultValue={transact.category}
+          onChange={handleCatChange}
+        ></Select>
+      </td>
+      <td>
         <input value={newDesc} onChange={handleDescChange}></input>
       </td>
       <td>
         <input type="number" value={newAmt} onChange={handleAmtChange}></input>
+      </td>
+      <td>
+        <input value={str} onChange={handleDateChange}></input>
       </td>
       {del_button}
       {save_button}
@@ -74,6 +111,7 @@ const Transaction = ({ transact, handleDelete, handleEdit }) => {
     setNewDesc(transact.description);
     setNewAmt(transact.amount);
   }, [transact.description, transact.amount]);
+  console.log(transact.category);
   return editItem ? input_entry : reg_entry;
 };
 

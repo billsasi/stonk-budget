@@ -3,6 +3,11 @@
     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+html {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 button {
   padding: 5px;
   background-color: rgb(255, 255, 255);
@@ -32,7 +37,7 @@ button:active {
   justify-content: space-evenly;
   width: 100vw;
   max-width: 100%;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .input-form {
@@ -122,4 +127,49 @@ td {
 
 .nav {
   height: 50px;
+}
+
+.income-button {
+  height: 40px;
+  width: 60px;
+}
+
+.nav-bar {
+  padding: 10px;
+  padding-top: 3px;
+  margin-left: 10px;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: rgb(174, 174, 174);
+}
+
+.nav-text {
+  margin-left: 10em;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  padding: 6px;
+  border-radius: 5px;
+}
+
+a:hover {
+  background-color: rgb(239, 238, 238);
+}
+
+.title {
+  font-size: larger;
+  font-weight: bold;
+}
+
+.monthly-budget {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
