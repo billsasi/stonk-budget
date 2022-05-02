@@ -13,6 +13,7 @@ function StonkRecomm() {
   const [loading, setLoading] = useState(false);
   const [ready, setReady] = useState(false);
   const [err, setErr] = useState(false);
+  const [invInput, setInvInput] = useState(false);
 
   const setStockList = async (stocks) => {
     setStocks(stocks);
@@ -23,11 +24,17 @@ function StonkRecomm() {
     setLoading(true);
     const { data } = await axios.post('http://127.0.0.1:5000', stocks);
     console.log(data);
-    setLoading(false);
-    setResults(data[0]);
-    setRankDict(data[1]);
-    setPriceDict(data[2]);
-    setReady(true);
+    if (typeof data === 'string') {
+      setInvInput(true);
+    } else {
+      setInvInput(false);
+      console.log(data);
+      setLoading(false);
+      setResults(data[0]);
+      setRankDict(data[1]);
+      setPriceDict(data[2]);
+      setReady(true);
+    }
   };
 
   return (
@@ -42,6 +49,7 @@ function StonkRecomm() {
       <Input handleAddStocks={setStockList} />
       {err && <h3 style={{ color: 'red' }}>Error: Enter at least 3 stocks</h3>}
       {loading && <h1>Fetching Results...</h1>}
+      {invInput && <h1>Invalid Inputs</h1>}
       {ready && (
         <StockList
           stocks={results}
