@@ -65,7 +65,7 @@ const Overview = ({ transactions, month, handleIncomeChange }) => {
             )}
           </h1>
           {available < getTotalExpense() && (
-            <h3 style={{ color: 'red' }}>Budget Exceeded</h3>
+            <h3 style={{ color: 'red' }}>Spending exceeds available income</h3>
           )}
         </div>
         <div className="monthly-budget">
