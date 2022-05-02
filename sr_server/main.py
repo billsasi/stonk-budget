@@ -10,11 +10,10 @@ import yfinance as yf
 
 
 def main(userInput):
-    stockInfo = {}
-    for stock in userInput:
-        stockInfo[stock] = yf.Ticker(stock).info
-
     processedInput = symCheck.inputProcess(userInput)
+    error = 'Invalid inputs. Please enter again'
+    if(len(processedInput) == 0):
+        return error
     
     companyName = translate.match()
 
@@ -43,6 +42,10 @@ def main(userInput):
 
     companyTweetDict = dict(zip(processedInput, companyTweet))
     print("Top 3 Recommendation: ") 
+    
+    stockInfo = {}
+    for stock in processedInput:
+        stockInfo[stock] = yf.Ticker(stock).info
 
     return queue, companyTweetDict, stockInfo
 
