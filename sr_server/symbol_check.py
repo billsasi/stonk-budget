@@ -16,6 +16,9 @@ def inputProcess(inputs):
             print(user_input + ' not valid')
         else:
             valid_input.append(user_input)
+    empty_list =[]
+    if(len(valid_input) < 3):
+        return empty_list
     
     return valid_input
 
