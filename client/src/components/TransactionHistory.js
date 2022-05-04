@@ -30,6 +30,7 @@ const TransactionHistory = ({
                 transact.date.year === month.year
               );
             })
+            .sort((a, b) => a.date.day - b.date.day)
             .map((item, key) => {
               return (
                 <Transaction

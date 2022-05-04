@@ -44,7 +44,10 @@ const InputForm = ({ handleAddTransaction }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (description.length < 1 || !amount) return;
+    if (description.length < 1 || !amount || !dateStr || !category) {
+      alert('Missing info');
+      return;
+    }
     handleAddTransaction(transaction);
     setTransaction({ ...transaction, description: '', amount: '', date: '' });
     inputRef.current.focus();
