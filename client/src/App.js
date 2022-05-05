@@ -50,6 +50,7 @@ const App = () => {
     let label = '';
     transactions.forEach((tr) => {
       label = `${tr.date.month}/${tr.date.year}`;
+      console.log(monthAmounts);
       if (monthAmounts[label]) monthAmounts[label] += tr.amount;
       else monthAmounts[label] = tr.amount;
     });

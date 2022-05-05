@@ -11,7 +11,8 @@ const Overview = ({ transactions, month, handleIncomeChange }) => {
   const getTotalExpense = () => {
     let sum = 0;
     transactions.forEach((item) => {
-      if (item.date.month === month.month) sum += item.amount;
+      if (item.date.month === month.month && item.date.year === month.year)
+        sum += item.amount;
     });
     return sum;
   };
